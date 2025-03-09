@@ -19,7 +19,12 @@ def check(username):
         
         ticket = r['data']['token']
         url = f'https://api16-normal-c-useast1a.tiktokv.com/passport/auth/available_ways/?request_tag_from=h5&not_login_ticket={ticket}&iid={iid}&device_id={did}&ac=wifi&channel=googleplay&aid=567753'
-        return {'status': 'success', 'passkey': get(url).json()['data']['has_passkey']}
+        passkey_status = get(url).json()['data']['has_passkey']
+        if passkey_status:
+            return {'status': 'success', 'passkey': True}
+        else:
+            return {'status': 'success', 'passkey': False}
+        
     except Exception as e:
         return {'status': 'error', 'message': str(e)}
 
@@ -69,6 +74,8 @@ def check_username():
     if not username:
         return jsonify({'status': 'error', 'message': 'Username is required'}), 400
     result = check(username)
+    if result['status'] == 'error':
+        return jsonify(result), 400
     return jsonify(result)
 
 # Route for getting TikTok account info
