@@ -1,61 +1,919 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Username Region Fetcher</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="icon" type="png" sizes="32x32" href="/favicon-32x32.png">
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok User Info - TikTok Country Finder Tool</title>
+  <meta name="description" content="Discover TikTok user information, including country, profile details, and stats with our TikTok Country Finder Tool. Easily find TikTok user profiles and their region.">
+  <meta name="keywords" content="TikTok country finder, TikTok user info, TikTok profile finder, TikTok region, TikTok user stats">
+  <meta name="author" content="Jamie">
+  
+  <meta property="og:title" content="TikTok User Info - TikTok Country Finder Tool">
+  <meta property="og:description" content="Discover TikTok user information, including country, profile details, and stats with our TikTok Country Finder Tool.">
+  <meta property="og:image" content="https://i.imgur.com/kgsfk22.png">
+  <meta property="og:url" content="https://tiktokfindercountry.xyz/">
+  <meta property="og:type" content="website">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TikTok User Info - TikTok Country Finder Tool">
+  <meta name="twitter:description" content="Discover TikTok user information, including country, profile details, and stats with our TikTok Country Finder Tool.">
+  <meta name="twitter:image" content="https://i.imgur.com/kgsfk22.png">
+  <meta name="google-site-verification" content="qIEr8PV0y79ER0Hff4a51G3pPnp8h4w-pQ1i14JL0ck">
+  
+  <link rel="canonical" href="https://tiktokfindercountry.xyz/">
+  <link rel="icon" href="https://i.imgur.com/kgsfk22.png" type="image/png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+    :root {
+      --ctp-rosewater: #f5e0dc;
+      --ctp-flamingo: #f2cdcd;
+      --ctp-pink: #f5c2e7;
+      --ctp-mauve: #cba6f7;
+      --ctp-red: #f38ba8;
+      --ctp-maroon: #eba0ac;
+      --ctp-peach: #fab387;
+      --ctp-yellow: #f9e2af;
+      --ctp-green: #a6e3a1;
+      --ctp-teal: #94e2d5;
+      --ctp-sky: #89dceb;
+      --ctp-sapphire: #74c7ec;
+      --ctp-blue: #89b4fa;
+      --ctp-lavender: #b4befe;
+      --ctp-text: #cdd6f4;
+      --ctp-subtext1: #bac2de;
+      --ctp-subtext0: #a6adc8;
+      --ctp-overlay2: #9399b2;
+      --ctp-overlay1: #7f849c;
+      --ctp-overlay0: #6c7086;
+      --ctp-surface2: #585b70;
+      --ctp-surface1: #45475a;
+      --ctp-surface0: #313244;
+      --ctp-base: #1e1e2e;
+      --ctp-mantle: #181825;
+      --ctp-crust: #11111b;
+    }
+
+    .light-theme {
+      --ctp-rosewater: #dc8a78;
+      --ctp-flamingo: #dd7878;
+      --ctp-pink: #ea76cb;
+      --ctp-mauve: #8839ef;
+      --ctp-red: #d20f39;
+      --ctp-maroon: #e64553;
+      --ctp-peach: #fe640b;
+      --ctp-yellow: #df8e1d;
+      --ctp-green: #40a02b;
+      --ctp-teal: #179299;
+      --ctp-sky: #04a5e5;
+      --ctp-sapphire: #209fb5;
+      --ctp-blue: #1e66f5;
+      --ctp-lavender: #7287fd;
+      --ctp-text: #4c4f69;
+      --ctp-subtext1: #5c5f77;
+      --ctp-subtext0: #6c6f85;
+      --ctp-overlay2: #7c7f93;
+      --ctp-overlay1: #8c8fa1;
+      --ctp-overlay0: #9ca0b0;
+      --ctp-surface2: #acb0be;
+      --ctp-surface1: #bcc0cc;
+      --ctp-surface0: #ccd0da;
+      --ctp-base: #eff1f5;
+      --ctp-mantle: #e6e9ef;
+      --ctp-crust: #dce0e8;
+    }
+
+    body {
+      background-color: var(--ctp-base);
+      color: var(--ctp-text);
+      font-family: 'Lato', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+      text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 25px;
+      background-color: var(--ctp-mantle);
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .header img {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+    }
+
+    h1 {
+      color: var(--ctp-blue);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    h2 {
+      color: var(--ctp-lavender);
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
+
+    .apology-message {
+      color: var(--ctp-subtext0);
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      font-style: italic;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+
+    .results-display {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      background-color: var(--ctp-crust);
+      padding: 20px;
+      border-radius: 15px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      text-align: left;
+      font-size: 1.1rem;
+    }
+
+    .input-container {
+      display: flex;
+      width: 100%;
+      margin-top: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 15px;
+      border: none;
+      background-color: var(--ctp-surface0);
+      color: var(--ctp-subtext1);
+      font-size: 1rem;
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--ctp-overlay2);
+    }
+
+    button {
+      background-color: var(--ctp-blue);
+      color: var(--ctp-crust);
+      border: none;
+      padding: 15px 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: var(--ctp-sapphire);
+      transform: translateY(-2px);
+    }
+
+    .avatar-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    #avatar {
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: 50%;
+      margin-top: 10px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      display: none;
+      loading: "lazy";
+    }
+
+    #avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-content {
+      margin: 15% auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .error-message {
+      color: var(--ctp-red);
+      margin-top: 10px;
+    }
+
+    .credits {
+      margin-top: 40px;
+      color: var(--ctp-subtext0);
+      font-size: 0.9rem;
+    }
+
+    .credits a {
+      color: var(--ctp-sky);
+      text-decoration: none;
+    }
+
+    .credits a:hover {
+      text-decoration: underline;
+    }
+
+    #downloadButton {
+      margin-top: 10px;
+      background-color: var(--ctp-green);
+    }
+
+    #downloadButton:hover {
+      background-color: var(--ctp-teal);
+    }
+
+    .flag {
+      width: 20px;
+      height: 14px;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+
+    .cooldown-timer {
+      margin-top: 10px;
+      color: var(--ctp-red);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .faq-button {
+      background-color: var(--ctp-mauve);
+      color: var(--ctp-crust);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-left: 10px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .faq-button:hover {
+      background-color: var(--ctp-pink);
+      transform: translateY(-2px);
+    }
+
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--ctp-surface0);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    #themeToggle:hover {
+      background-color: var(--ctp-surface1);
+    }
+
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 5px solid var(--ctp-blue);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }  
+
+    .paste-button {
+      background-color: var(--ctp-surface0);
+      color: var(--ctp-text);
+      border: none;
+      padding: 15px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .paste-button:hover {
+      background-color: var(--ctp-surface1);
+    }
+
+    .kofi-button {
+      background-color: var(--ctp-red);
+      color: var(--ctp-crust);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-left: 10px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .kofi-button:hover {
+      background-color: var(--ctp-maroon);
+      transform: translateY(-2px);
+    }
+
+    .kofi-button span {
+      margin-right: 5px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">TikTok Username Region Fetcher</h1>
-        <p class="subtitle">Enter a TikTok username to discover its region</p>
-        
-        <!-- Username input box -->
-        <div class="input-box">
-            <label for="username" class="input-label">@Username</label>
-            <input type="text" id="username" placeholder="Enter TikTok Username" class="input-field"/>
-        </div>
+  <button id="themeToggle" aria-label="Toggle theme">🌞</button>
+  <div class="container">
+    <div class="header">
+      <img src="https://i.imgur.com/kgsfk22.png" alt="TikTok Icon">
+      <h1>TikTok User Finder</h1>
+    </div>
+    <h2>Check out user stats and profile pics</h2>
+    <p class="apology-message">If you face any problem, please contact us.</p>
 
-        <!-- Fetch region button -->
-        <button class="fetch-button" onclick="checkRegion()">Fetch Region</button>
-
-        <!-- Display result -->
-        <div id="region-result" class="result"></div>
-
-        <!-- Light/Dark mode toggle -->
-        <button class="toggle-button" onclick="toggleTheme()">Toggle Dark Mode</button>
+    <div class="avatar-wrapper">
+      <img id="avatar" src="" alt="User Avatar" loading="lazy">
     </div>
 
-    <script>
-        let isDarkMode = false;
+    <div id="downloadContainer" style="display: none;">
+      <button id="downloadButton" aria-label="Download avatar">Download Avatar</button>
+    </div>
 
-        // Toggle between dark and light mode
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            document.body.classList.toggle('dark-mode', isDarkMode);
+    <div class="results-display" id="responseDisplay" aria-live="polite">Enter a username and click the button...</div>
+
+    <div class="input-container">
+      <input type="text" id="usernameInput" placeholder="Enter TikTok username" aria-label="TikTok username input">
+      <button class="paste-button" aria-label="Paste username" onclick="pasteUsername()">
+        <i class="fa-solid fa-paste"></i>
+      </button>
+      <button id="fetchButton" aria-label="Fetch user data">Fetch Data</button>
+    </div>
+
+    <div class="cooldown-timer" id="cooldownTimer" style="display: none;"></div>
+
+    <div class="credits">
+      Made with <span style="color: var(--ctp-red);">♥</span> by <a href="https://www.instagram.com/motherfuckergotfuckedup/" target="_blank">jamie</a> |
+      Using <a href="https://github.com/catppuccin/catppuccin" target="_blank">Catppuccin</a> colors
+      <button onclick="window.open('https://omar-thing.nekoweb.org/faq.html', '_blank')" class="faq-button">FAQ</button>
+      <button onclick="window.open('https://tiktokfindercountry.xyz/', '_blank')" class="faq-button">Original Domain "kinda faster"</button>
+      <script type="text/javascript" src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"></script>
+      <script type="text/javascript">kofiwidget2.init('Support me on Ko-fi', '#cba6f7', 'Q5Q11B7WUD');kofiwidget2.draw();</script><style>img.kofiimg{display: initial!important;vertical-align:middle;height:13px!important;width:20px!important;padding-top:0!important;padding-bottom:0!important;border:none;margin-top:0;margin-right:5px!important;margin-left:0!important;margin-bottom:3px!important;content:url('https://storage.ko-fi.com/cdn/cup-border.png')}.kofiimg:after{vertical-align:middle;height:25px;padding-top:0;padding-bottom:0;border:none;margin-top:0;margin-right:6px;margin-left:0;margin-bottom:4px!important;content:url('https://storage.ko-fi.com/cdn/whitelogo.svg')}.btn-container{display:inline-block!important;white-space:nowrap;min-width:160px}span.kofitext{color:#fff !important;letter-spacing: -0.15px!important;text-wrap:none;vertical-align:middle;line-height:33px !important;padding:0;text-align:center;text-decoration:none!important; text-shadow: 0 1px 1px rgba(34, 34, 34, 0.05);}.kofitext a{color:#fff !important;text-decoration:none:important;}.kofitext a:hover{color:#fff !important;text-decoration:none}a.kofi-button{box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);line-height:36px!important;min-width:150px;display:inline-block!important;background-color:#29abe0;padding:2px 12px !important;text-align:center !important;border-radius:7px;color:#fff;cursor:pointer;overflow-wrap:break-word;vertical-align:middle;border:0 none #fff !important;font-family:'Quicksand',Helvetica,Century Gothic,sans-serif !important;text-decoration:none;text-shadow:none;font-weight:700!important;font-size:14px !important}a.kofi-button:visited{color:#fff !important;text-decoration:none !important}a.kofi-button:hover{opacity:.85;color:#f5f5f5 !important;text-decoration:none !important}a.kofi-button:active{color:#f5f5f5 !important;text-decoration:none !important}.kofitext img.kofiimg {height:15px!important;width:22px!important;display: initial;animation: kofi-wiggle 3s infinite;}@keyframes kofi-wiggle{0%{transform:rotate(0) scale(1)}60%{transform:rotate(0) scale(1)}75%{transform:rotate(0) scale(1.12)}80%{transform:rotate(0) scale(1.1)}84%{transform:rotate(-10deg) scale(1.1)}88%{transform:rotate(10deg) scale(1.1)}92%{transform:rotate(-10deg) scale(1.1)}96%{transform:rotate(10deg) scale(1.1)}100%{transform:rotate(0) scale(1)}}</style><link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet" type="text/css"><div class="btn-container"><a title="Support me on ko-fi.com" class="kofi-button" style="background-color:#cba6f7;" href="https://ko-fi.com/Q5Q11B7WUD" target="_blank"> <span class="kofitext"><img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi donations" class="kofiimg">Support me on Ko-fi</span></a></div>
+
+    </div>
+  </div>
+
+  <div id="avatarModal" class="modal">
+    <span class="close">×</span>
+    <img class="modal-content" id="fullAvatar">
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      body.classList.add('light-theme');
+      themeToggle.textContent = '🌙';
+    } else {
+      themeToggle.textContent = '🌞';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-theme');
+      const isLightTheme = body.classList.contains('light-theme');
+      localStorage.setItem('theme', isLightTheme ? 'light' : 'dark');
+      themeToggle.textContent = isLightTheme ? '🌙' : '🌞';
+    });
+
+    let isCooldownActive = false;
+    let cooldownTime = 3;
+    let spamCount = 0;
+
+    function startCooldown(seconds) {
+      const fetchButton = document.getElementById('fetchButton');
+      const usernameInput = document.getElementById('usernameInput');
+      const cooldownTimer = document.getElementById('cooldownTimer');
+
+      isCooldownActive = true;
+      fetchButton.disabled = true;
+      usernameInput.disabled = true;
+      cooldownTimer.style.display = 'block';
+
+      let remainingTime = seconds;
+      cooldownTimer.textContent = `CoolDown: Please wait ${remainingTime} seconds before fetching again.`;
+
+      const interval = setInterval(() => {
+        remainingTime -= 1;
+        cooldownTimer.textContent = `CoolDown: Please wait ${remainingTime} seconds before fetching again.`;
+
+        if (remainingTime <= 0) {
+          clearInterval(interval);
+          fetchButton.disabled = false;
+          usernameInput.disabled = false;
+          cooldownTimer.style.display = 'none';
+          isCooldownActive = false;
+          spamCount = 0;
+        }
+      }, 1000);
+    }
+
+    const countryMap = {
+      "AF": "Afghanistan",
+      "AL": "Albania",
+      "DZ": "Algeria",
+      "AS": "American Samoa",
+      "AD": "Andorra",
+      "AO": "Angola",
+      "AI": "Anguilla",
+      "AQ": "Antarctica",
+      "AG": "Antigua and Barbuda",
+      "AR": "Argentina",
+      "AM": "Armenia",
+      "AW": "Aruba",
+      "AU": "Australia",
+      "AT": "Austria",
+      "AZ": "Azerbaijan",
+      "BS": "Bahamas",
+      "BH": "Bahrain",
+      "BD": "Bangladesh",
+      "BB": "Barbados",
+      "BY": "Belarus",
+      "BE": "Belgium",
+      "BZ": "Belize",
+      "BJ": "Benin",
+      "BM": "Bermuda",
+      "BT": "Bhutan",
+      "BO": "Bolivia",
+      "BA": "Bosnia and Herzegovina",
+      "BW": "Botswana",
+      "BR": "Brazil",
+      "IO": "British Indian Ocean Territory",
+      "BN": "Brunei",
+      "BG": "Bulgaria",
+      "BF": "Burkina Faso",
+      "BI": "Burundi",
+      "CV": "Cabo Verde",
+      "KH": "Cambodia",
+      "CM": "Cameroon",
+      "CA": "Canada",
+      "KY": "Cayman Islands",
+      "CF": "Central African Republic",
+      "TD": "Chad",
+      "CL": "Chile",
+      "CN": "China",
+      "CX": "Christmas Island",
+      "CC": "Cocos (Keeling) Islands",
+      "CO": "Colombia",
+      "KM": "Comoros",
+      "CG": "Congo",
+      "CD": "Congo (Democratic Republic of the)",
+      "CK": "Cook Islands",
+      "CR": "Costa Rica",
+      "CI": "Côte d'Ivoire",
+      "HR": "Croatia",
+      "CU": "Cuba",
+      "CW": "Curaçao",
+      "CY": "Cyprus",
+      "CZ": "Czechia",
+      "DK": "Denmark",
+      "DJ": "Djibouti",
+      "DM": "Dominica",
+      "DO": "Dominican Republic",
+      "EC": "Ecuador",
+      "EG": "Egypt",
+      "SV": "El Salvador",
+      "GQ": "Equatorial Guinea",
+      "ER": "Eritrea",
+      "EE": "Estonia",
+      "SZ": "Eswatini",
+      "ET": "Ethiopia",
+      "FK": "Falkland Islands",
+      "FO": "Faroe Islands",
+      "FJ": "Fiji",
+      "FI": "Finland",
+      "FR": "France",
+      "GF": "French Guiana",
+      "PF": "French Polynesia",
+      "TF": "French Southern Territories",
+      "GA": "Gabon",
+      "GM": "Gambia",
+      "GE": "Georgia",
+      "DE": "Germany",
+      "GH": "Ghana",
+      "GI": "Gibraltar",
+      "GR": "Greece",
+      "GL": "Greenland",
+      "GD": "Grenada",
+      "GP": "Guadeloupe",
+      "GU": "Guam",
+      "GT": "Guatemala",
+      "GG": "Guernsey",
+      "GN": "Guinea",
+      "GW": "Guinea-Bissau",
+      "GY": "Guyana",
+      "HT": "Haiti",
+      "HM": "Heard Island and McDonald Islands",
+      "VA": "Holy See",
+      "HN": "Honduras",
+      "HK": "Hong Kong",
+      "HU": "Hungary",
+      "IS": "Iceland",
+      "IN": "India",
+      "ID": "Indonesia",
+      "IR": "Iran",
+      "IQ": "Iraq",
+      "IE": "Ireland",
+      "IM": "Isle of Man",
+      "IL": "Israel",
+      "IT": "Italy",
+      "JM": "Jamaica",
+      "JP": "Japan",
+      "JE": "Jersey",
+      "JO": "Jordan",
+      "KZ": "Kazakhstan",
+      "KE": "Kenya",
+      "KI": "Kiribati",
+      "KP": "North Korea",
+      "KR": "South Korea",
+      "KW": "Kuwait",
+      "KG": "Kyrgyzstan",
+      "LA": "Laos",
+      "LV": "Latvia",
+      "LB": "Lebanon",
+      "LS": "Lesotho",
+      "LR": "Liberia",
+      "LY": "Libya",
+      "LI": "Liechtenstein",
+      "LT": "Lithuania",
+      "LU": "Luxembourg",
+      "MO": "Macao",
+      "MG": "Madagascar",
+      "MW": "Malawi",
+      "MY": "Malaysia",
+      "MV": "Maldives",
+      "ML": "Mali",
+      "MT": "Malta",
+      "MH": "Marshall Islands",
+      "MQ": "Martinique",
+      "MR": "Mauritania",
+      "MU": "Mauritius",
+      "YT": "Mayotte",
+      "MX": "Mexico",
+      "FM": "Micronesia",
+      "MD": "Moldova",
+      "MC": "Monaco",
+      "MN": "Mongolia",
+      "ME": "Montenegro",
+      "MS": "Montserrat",
+      "MA": "Morocco",
+      "MZ": "Mozambique",
+      "MM": "Myanmar",
+      "NA": "Namibia",
+      "NR": "Nauru",
+      "NP": "Nepal",
+      "NL": "Netherlands",
+      "NC": "New Caledonia",
+      "NZ": "New Zealand",
+      "NI": "Nicaragua",
+      "NE": "Niger",
+      "NG": "Nigeria",
+      "NU": "Niue",
+      "NF": "Norfolk Island",
+      "MK": "North Macedonia",
+      "NO": "Norway",
+      "OM": "Oman",
+      "PK": "Pakistan",
+      "PW": "Palau",
+      "PS": "Palestine",
+      "PA": "Panama",
+      "PG": "Papua New Guinea",
+      "PY": "Paraguay",
+      "PE": "Peru",
+      "PH": "Philippines",
+      "PN": "Pitcairn",
+      "PL": "Poland",
+      "PT": "Portugal",
+      "PR": "Puerto Rico",
+      "QA": "Qatar",
+      "RE": "Réunion",
+      "RO": "Romania",
+      "RU": "Russia",
+      "RW": "Rwanda",
+      "BL": "Saint Barthélemy",
+      "SH": "Saint Helena",
+      "KN": "Saint Kitts and Nevis",
+      "LC": "Saint Lucia",
+      "MF": "Saint Martin",
+      "PM": "Saint Pierre and Miquelon",
+      "VC": "Saint Vincent and the Grenadines",
+      "WS": "Samoa",
+      "SM": "San Marino",
+      "ST": "São Tomé and Príncipe",
+      "SA": "Saudi Arabia",
+      "SN": "Senegal",
+      "RS": "Serbia",
+      "SC": "Seychelles",
+      "SL": "Sierra Leone",
+      "SG": "Singapore",
+      "SX": "Sint Maarten",
+      "SK": "Slovakia",
+      "SI": "Slovenia",
+      "SB": "Solomon Islands",
+      "SO": "Somalia",
+      "ZA": "South Africa",
+      "GS": "South Georgia and the South Sandwich Islands",
+      "SS": "South Sudan",
+      "ES": "Spain",
+      "LK": "Sri Lanka",
+      "SD": "Sudan",
+      "SR": "Suriname",
+      "SJ": "Svalbard and Jan Mayen",
+      "SE": "Sweden",
+      "CH": "Switzerland",
+      "SY": "Syria",
+      "TW": "Taiwan",
+      "TJ": "Tajikistan",
+      "TZ": "Tanzania",
+      "TH": "Thailand",
+      "TL": "Timor-Leste",
+      "TG": "Togo",
+      "TK": "Tokelau",
+      "TO": "Tonga",
+      "TT": "Trinidad and Tobago",
+      "TN": "Tunisia",
+      "TR": "Turkey",
+      "TM": "Turkmenistan",
+      "TC": "Turks and Caicos Islands",
+      "TV": "Tuvalu",
+      "UG": "Uganda",
+      "UA": "Ukraine",
+      "AE": "United Arab Emirates",
+      "GB": "United Kingdom",
+      "US": "United States",
+      "UM": "United States Minor Outlying Islands",
+      "UY": "Uruguay",
+      "UZ": "Uzbekistan",
+      "VU": "Vanuatu",
+      "VE": "Venezuela",
+      "VN": "Vietnam",
+      "VG": "Virgin Islands (British)",
+      "VI": "Virgin Islands (U.S.)",
+      "WF": "Wallis and Futuna",
+      "EH": "Western Sahara",
+      "YE": "Yemen",
+      "ZM": "Zambia",
+      "ZW": "Zimbabwe"
+    };
+
+    function getCountryName(countryCode) {
+      return countryMap[countryCode.toUpperCase()] || 'Unknown Country';
+    }
+
+    async function fetchData() {
+      if (isCooldownActive) {
+        spamCount += 1;
+        if (spamCount >= 5) cooldownTime = 10;
+        alert(`Cooldown is active. Please wait ${cooldownTime} seconds before fetching again.`);
+        return;
+      }
+
+      const username = document.getElementById('usernameInput').value.trim();
+      const avatarImg = document.getElementById('avatar');
+      const responseDisplay = document.getElementById('responseDisplay');
+      const downloadContainer = document.getElementById('downloadContainer');
+      avatarImg.style.display = 'none';
+      downloadContainer.style.display = 'none';
+
+      if (!username) {
+        responseDisplay.textContent = "Please enter a username.";
+        return;
+      }
+
+      startCooldown(cooldownTime);
+
+      responseDisplay.innerHTML = `
+        <div style="text-align: center;">
+          <div class="loader"></div>
+          <span style="font-size: 14px; color: gray;">Fetching data, It may take 5 seconds. "Please ensure that the entered username is correct"</span>
+        </div>`;
+
+      const workerUrl = `https://nopean.click/`;
+
+      try {
+        const response = await fetch(workerUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username }),
+        });
+
+        if (!response.ok) {
+          if (response.status === 429) {
+            responseDisplay.textContent = "Rate limit exceeded. Please try again in a few seconds.";
+          } else {
+            responseDisplay.textContent = "Error: Please ensure the username is correct, with no '@' symbol.";
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        async function checkRegion() {
-            const username = document.getElementById('username').value.trim();
-            if (username === "") {
-                alert("Please enter a username.");
-                return;
-            }
+        const data = await response.json();
 
-            const response = await fetch(`/check?username=${username}`);
-            const result = await response.json();
-
-            if (result.status === "error") {
-                document.getElementById('region-result').innerText = "Account doesn't exist.";
-                document.getElementById('region-result').style.color = 'red';
-            } else {
-                const passkeyStatus = result.passkey ? 'Passkey exists' : 'No passkey';
-                document.getElementById('region-result').innerText = `Region: ${result.region}\n${passkeyStatus}`;
-                document.getElementById('region-result').style.color = 'green';
-            }
+        if (!data || data.error) {
+          responseDisplay.textContent = "Error: Unable to fetch user data. Please check the username or try again later.";
+          return;
         }
-    </script>
-</body>
-</html>
+
+        let displayText = '';
+
+        if (data.nickname) {
+          const regionImageUrl = data.region ? getFlagImageUrl(data.region) : '';
+          const countryName = data.region ? getCountryName(data.region) : 'Unknown Country';
+
+          displayText += `👤 Nickname: ${data.nickname}\n`;
+          displayText += `👤 Username: ${data.username}\n`;
+          displayText += `🌍 Region: ${data.region} ${regionImageUrl ? `<img src="${regionImageUrl}" class="flag" alt="Flag">` : ''} (${countryName})\n`;
+          displayText += `🌐 Language: ${data.language}\n`;
+
+          if (data.about) {
+            const aboutText = data.about.replace(/\n/g, ' ');
+            displayText += `📜 About: ${aboutText}\n`;
+          } else {
+            displayText += `📜 About: User has no about\n`;
+          }
+
+          displayText += `🆔 User ID: ${data.userId}\n`;
+          displayText += `📅 Account Created: ${data.accountCreated}\n`;
+          displayText += `🕒 Nickname Modified: ${data.nicknameModified}\n\n`;
+
+          if (data.stats) {
+            displayText += `📊 Stats:\n`;
+            displayText += `👥 Followers: ${data.stats.followers}\n`;
+            displayText += `👤 Following: ${data.stats.following}\n`;
+            displayText += `❤️ Hearts: ${data.stats.hearts}\n`;
+            displayText += `🎥 Videos: ${data.stats.videos}\n`;
+            displayText += `👫 Friends: ${data.stats.friends}\n`;
+          }
+        }
+
+        if (data.avatar) {
+          avatarImg.src = data.avatar;
+          avatarImg.style.display = 'block';
+          downloadContainer.style.display = 'block';
+          downloadButton.onclick = () => downloadImage(data.avatar, `${username}-avatar`);
+        }
+
+        responseDisplay.innerHTML = displayText;
+
+      } catch (error) {
+        console.error("Fetch error:", error);
+        responseDisplay.textContent = "Error: Please make sure the entered username is correct, and does not include the @ symbol.";
+      }
+    }
+
+    async function pasteUsername() {
+      try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('usernameInput').value = text;
+      } catch (error) {
+        console.error("Failed to paste:", error);
+      }
+    }
+
+    document.addEventListener('keydown', (event) => {
+      const inputField = document.getElementById('usernameInput');
+      if (document.activeElement !== inputField) inputField.focus();
+    });
+
+    document.getElementById('usernameInput').addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        if (isCooldownActive) {
+          spamCount += 1;
+          if (spamCount >= 5) cooldownTime = 10;
+          alert(`Cooldown is active. Please wait ${cooldownTime} seconds before fetching again.`);
+        } else {
+          fetchData();
+        }
+      }
+    });
+
+    document.getElementById('fetchButton').addEventListener('click', fetchData);
+
+    function getFlagImageUrl(countryCode) {
+      return `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`;
+    }
+
+    function downloadImage(url, filename) {
+      fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('Error downloading image:', error));
+    }
+
+    const modal = document.getElementById('avatarModal');
+    const modalImg = document.getElementById('fullAvatar');
+    const avatarImg = document.getElementById('avatar');
+    const closeModal = document.getElementsByClassName('close')[0];
+
+    avatarImg.onclick = function () {
+      modal.style.display = 'block';
+      modalImg.src = this.src;
+    }
+
+    closeModal.onclick = function () {
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+      if (event.target == modal) modal.style.display = 'none';
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') modal.style.display = 'none';
+    });
+  </script>
+
+</body></html>
