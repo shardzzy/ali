@@ -1,115 +1,396 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f9;
-    transition: background-color 0.3s, color 0.3s;
-}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok User Info - TikTok Country Finder Tool</title>
+  <meta name="description" content="Discover TikTok user information, including country, profile details, and stats with our TikTok Country Finder Tool. Easily find TikTok user profiles and their region.">
+  <meta name="keywords" content="TikTok country finder, TikTok user info, TikTok profile finder, TikTok region, TikTok user stats">
+  <meta name="author" content="Jamie">
+  
+  <meta property="og:title" content="TikTok User Info - TikTok Country Finder Tool">
+  <meta property="og:description" content="Discover TikTok user information, including country, profile details, and stats with our TikTok Country Finder Tool.">
+  <meta property="og:image" content="https://i.imgur.com/kgsfk22.png">
+  <meta property="og:url" content="https://tiktokfindercountry.xyz/">
+  <meta property="og:type" content="website">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TikTok User Info - TikTok Country Finder Tool">
+  <meta name="twitter:description" content="Discover TikTok user information, including country, profile details, and stats with our TikTok Country Finder Tool.">
+  <meta name="twitter:image" content="https://i.imgur.com/kgsfk22.png">
+  <meta name="google-site-verification" content="qIEr8PV0y79ER0Hff4a51G3pPnp8h4w-pQ1i14JL0ck">
+  
+  <link rel="canonical" href="https://tiktokfindercountry.xyz/">
+  <link rel="icon" href="https://i.imgur.com/kgsfk22.png" type="image/png">
 
-.container {
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-.title {
-    font-size: 32px;
-    color: #1e90ff;
-    font-weight: bold;
-}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
-.subtitle {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 20px;
-}
+    :root {
+      --ctp-rosewater: #f5e0dc;
+      --ctp-flamingo: #f2cdcd;
+      --ctp-pink: #f5c2e7;
+      --ctp-mauve: #cba6f7;
+      --ctp-red: #f38ba8;
+      --ctp-maroon: #eba0ac;
+      --ctp-peach: #fab387;
+      --ctp-yellow: #f9e2af;
+      --ctp-green: #a6e3a1;
+      --ctp-teal: #94e2d5;
+      --ctp-sky: #89dceb;
+      --ctp-sapphire: #74c7ec;
+      --ctp-blue: #89b4fa;
+      --ctp-lavender: #b4befe;
+      --ctp-text: #cdd6f4;
+      --ctp-subtext1: #bac2de;
+      --ctp-subtext0: #a6adc8;
+      --ctp-overlay2: #9399b2;
+      --ctp-overlay1: #7f849c;
+      --ctp-overlay0: #6c7086;
+      --ctp-surface2: #585b70;
+      --ctp-surface1: #45475a;
+      --ctp-surface0: #313244;
+      --ctp-base: #1e1e2e;
+      --ctp-mantle: #181825;
+      --ctp-crust: #11111b;
+    }
 
-.input-box {
-    margin-bottom: 20px;
-}
+    .light-theme {
+      --ctp-rosewater: #dc8a78;
+      --ctp-flamingo: #dd7878;
+      --ctp-pink: #ea76cb;
+      --ctp-mauve: #8839ef;
+      --ctp-red: #d20f39;
+      --ctp-maroon: #e64553;
+      --ctp-peach: #fe640b;
+      --ctp-yellow: #df8e1d;
+      --ctp-green: #40a02b;
+      --ctp-teal: #179299;
+      --ctp-sky: #04a5e5;
+      --ctp-sapphire: #209fb5;
+      --ctp-blue: #1e66f5;
+      --ctp-lavender: #7287fd;
+      --ctp-text: #4c4f69;
+      --ctp-subtext1: #5c5f77;
+      --ctp-subtext0: #6c6f85;
+      --ctp-overlay2: #7c7f93;
+      --ctp-overlay1: #8c8fa1;
+      --ctp-overlay0: #9ca0b0;
+      --ctp-surface2: #acb0be;
+      --ctp-surface1: #bcc0cc;
+      --ctp-surface0: #ccd0da;
+      --ctp-base: #eff1f5;
+      --ctp-mantle: #e6e9ef;
+      --ctp-crust: #dce0e8;
+    }
 
-.input-label {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
+    body {
+      background-color: var(--ctp-base);
+      color: var(--ctp-text);
+      font-family: 'Lato', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+      text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-.input-field {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 8px;
-}
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 25px;
+      background-color: var(--ctp-mantle);
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+    }
 
-.fetch-button {
-    padding: 10px 20px;
-    background-color: #1e90ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
 
-.fetch-button:hover {
-    background-color: #0080ff;
-}
+    .header img {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+    }
 
-.result {
-    margin-top: 20px;
-    font-size: 18px;
-}
+    h1 {
+      color: var(--ctp-blue);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
 
-.toggle-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #32cd32;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    h2 {
+      color: var(--ctp-lavender);
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
 
-.toggle-button:hover {
-    background-color: #228b22;
-}
+    .apology-message {
+      color: var(--ctp-subtext0);
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      font-style: italic;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
 
-/* Dark mode styles */
-body.dark-mode {
-    background-color: #333;
-    color: #fff;
-}
+    .results-display {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      background-color: var(--ctp-crust);
+      padding: 20px;
+      border-radius: 15px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      text-align: left;
+      font-size: 1.1rem;
+    }
 
-body.dark-mode .container {
-    background-color: #444;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
+    .input-container {
+      display: flex;
+      width: 100%;
+      margin-top: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+    }
 
-body.dark-mode .fetch-button {
-    background-color: #32cd32;
-}
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 15px;
+      border: none;
+      background-color: var(--ctp-surface0);
+      color: var(--ctp-subtext1);
+      font-size: 1rem;
+    }
 
-body.dark-mode .fetch-button:hover {
-    background-color: #228b22;
-}
+    input[type="text"]::placeholder {
+      color: var(--ctp-overlay2);
+    }
 
-body.dark-mode .toggle-button {
-    background-color: #1e90ff;
-}
+    button {
+      background-color: var(--ctp-blue);
+      color: var(--ctp-crust);
+      border: none;
+      padding: 15px 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
-body.dark-mode .toggle-button:hover {
-    background-color: #0080ff;
-}
+    button:hover {
+      background-color: var(--ctp-sapphire);
+      transform: translateY(-2px);
+    }
+
+    .avatar-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    #avatar {
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: 50%;
+      margin-top: 10px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      display: none;
+      loading: "lazy";
+    }
+
+    #avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-content {
+      margin: 15% auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .error-message {
+      color: var(--ctp-red);
+      margin-top: 10px;
+    }
+
+    .credits {
+      margin-top: 40px;
+      color: var(--ctp-subtext0);
+      font-size: 0.9rem;
+    }
+
+    .credits a {
+      color: var(--ctp-sky);
+      text-decoration: none;
+    }
+
+    .credits a:hover {
+      text-decoration: underline;
+    }
+
+    #downloadButton {
+      margin-top: 10px;
+      background-color: var(--ctp-green);
+    }
+
+    #downloadButton:hover {
+      background-color: var(--ctp-teal);
+    }
+
+    .flag {
+      width: 20px;
+      height: 14px;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+
+    .cooldown-timer {
+      margin-top: 10px;
+      color: var(--ctp-red);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .faq-button {
+      background-color: var(--ctp-mauve);
+      color: var(--ctp-crust);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-left: 10px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .faq-button:hover {
+      background-color: var(--ctp-pink);
+      transform: translateY(-2px);
+    }
+
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--ctp-surface0);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    #themeToggle:hover {
+      background-color: var(--ctp-surface1);
+    }
+
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 5px solid var(--ctp-blue);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }  
+
+    .paste-button {
+      background-color: var(--ctp-surface0);
+      color: var(--ctp-text);
+      border: none;
+      padding: 15px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .paste-button:hover {
+      background-color: var(--ctp-surface1);
+    }
+
+    .kofi-button {
+      background-color: var(--ctp-red);
+      color: var(--ctp-crust);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-left: 10px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .kofi-button:hover {
+      background-color: var(--ctp-maroon);
+      transform: translateY(-2px);
+    }
+
+    .kofi-button span {
+      margin-right: 5px;
+    }
+  </style>
+</head>
