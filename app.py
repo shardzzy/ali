@@ -1,7 +1,10 @@
+from flask import Flask, request, jsonify
 from requests import get, post
 from time import time
 from bs4 import BeautifulSoup
 import json
+
+app = Flask(__name__)
 
 # Function to check passkey for a given TikTok username
 def check(username):
@@ -59,12 +62,23 @@ def info(secuid):
             'error': str(e)
         }
 
-# Example usage of the functions
-if __name__ == '__main__':
-    # Check passkey for a username
-    username_check = check('cat')
-    print('Username check result:', username_check)
-    
-    # Get info for a TikTok account
-    user_info = info('cat')
-    print('User info:', user_info)
+# Route for checking passkey
+@app.route('/check', methods=['GET'])
+def check_username():
+    username = request.args.get('username')
+    if not username:
+        return jsonify({'status': 'error', 'message': 'Username is required'}), 400
+    result = check(username)
+    return jsonify(result)
+
+# Route for getting TikTok account info
+@app.route('/info', methods=['GET'])
+def get_info():
+    secuid = request.args.get('secuid')
+    if not secuid:
+        return jsonify({'status': 'error', 'message': 'secuid is required'}), 400
+    result = info(secuid)
+    return jsonify(result)
+
+if __name__ == "__main__":
+    app.run(debug=True)
