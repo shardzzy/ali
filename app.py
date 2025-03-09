@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from werkzeug.urls import url_quote_plus
 from requests import get, post
 from time import time
 from bs4 import BeautifulSoup
